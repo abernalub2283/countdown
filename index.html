@@ -16,7 +16,7 @@
         </div>
         <div id="settings">
             <label>Event <input type="text" id="event-input" value="Christmas"></label>
-            <label>Date <input type="date" id="date-input" value="2026-12-25">
+            <label>Date <input type="date" id="date-input" value="2026-12-25"></label>
         </div>
 
         <script>
@@ -31,11 +31,11 @@
                     document.getElementById('countdown').innerHTML = '<p class ="arrived"> The day is here!</p>';
                     return;
                 }
-                    document.getElementById('days').textContent = '0';
-                    document.getElementById('hours').textContent = '0';
-                    document.getElementById('minutes').textContent = '0';
-                    document.getElementById('seconds').textContent = '0';
-                    return;
+                    document.getElementById('days').textContent = Math.floor(diff / 86400000);
+                    document.getElementById('hours').textContent = Math.floor(diff / 3600000) % 24;
+                    document.getElementById('minutes').textContent = Math.floor(diff / 60000) % 60;
+                    document.getElementById('seconds').textContent = Math.floor(diff / 1000) % 60;
+
                 }
                 document.getElementById('date-input').addEventListener('change', function(event){
                     localStorage.setItem('countdownDate', event.target.value);
