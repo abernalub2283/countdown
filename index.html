@@ -1,0 +1,57 @@
+<!Doctype HTML>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Countdown</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1 id="event-name">Christmas</h1>
+        <div id="countdown">
+            <div class="unit"><span id="days">0</span><label>Days</label></div>
+            <div class="unit"><span id="hours">0</span><label>Hours</label></div>
+            <div class="unit"><span id="minutes">0</span><label>Minutes</label></div>
+            <div class="unit"><span id="seconds">0</span><label>Seconds</label></div>
+        </div>
+        <div id="settings">
+            <label>Event <input type="text" id="event-input" value="Christmas"></label>
+            <label>Date <input type="date" id="date-input" value="2026-12-25">
+        </div>
+
+        <script>
+            function getTarget() {
+                const saved = localStorage.getItem('countdownDate');
+                return new Date((saved || '2026-12-25') + 'T00:00:00');
+            }
+
+            function updateCountdown() {
+                const diff = getTarget() - new Date();
+                if (diff <= 0) {
+                    document.getElementById('countdown').innerHTML = '<p class ="arrived"> The day is here!</p>';
+                    return;
+                }
+                    document.getElementById('days').textContent = '0';
+                    document.getElementById('hours').textContent = '0';
+                    document.getElementById('minutes').textContent = '0';
+                    document.getElementById('seconds').textContent = '0';
+                    return;
+                }
+                document.getElementById('date-input').addEventListener('change', function(event){
+                    localStorage.setItem('countdownDate', event.target.value);
+                    updateCountdown();
+                });
+                document.getElementById('event-input').addEventListener('input', function(event){
+                    document.getElementById('event-name').textContent = event.target.value || 'Countdown';
+                    localStorage.setItem('countdownEvent', event.target.value);
+                });
+
+                document.getElementById('event-name').textContent = localStorage.getItem('countdownEvent') || 'Christmas';
+                document.getElementById('event-input').value = localStorage.getItem('countdownEvent') || 'Christmas';
+                document.getElementById('date-input').value = localStorage.getItem('countdownDate') || '2026-12-25';
+
+                setInterval(updateCountdown, 1000);
+                updateCountdown();
+        </script>
+    </body>
+</html>
